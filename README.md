@@ -53,6 +53,23 @@ vue全家桶+epub 阅读器
 使用web字体  
 通过link方式引入或者通过import方式在mainjs中全局引入
 
+### 4 viewport配置和rem设置
+`<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">`  
+maximum-scale=1.0 ----- 最大缩放比例1.0  
+minimum-scale=1.0 ----- 最小缩放比例1.0  
+user-scalable=no ------ 不允许用户进行缩放  
+
+rem设置  
+```
+//app.vue中
+document.addEventListener('DOMContentLoaded', () => {
+    let fontSize = window.innerWidth / 10
+    fontSize = fontSize > 50 ? 50 : fontSize
+    const html = document.querySelector('html')
+    html.style.fontSize = fontSize + 'px'
+  })
+```
+
 
 
 
