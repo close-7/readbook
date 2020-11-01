@@ -91,6 +91,10 @@ font-size:px2rem(20)
 }
 ```
 
+### 6 nginx搭建静态资源服务器
+1   brew install nginx
+2   sss
+
 
 
 
