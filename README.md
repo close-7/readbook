@@ -47,6 +47,11 @@ vue全家桶+epub 阅读器
         unicode-range:.....             //unicode范围
     }
 ```
+字体文件来源  
+通过 fonts.googleapis.com/css？family=Tangerine:bold,bolditalic|lnconsolata:italic|Droid+Sans 这个网址配置并找到我们想要的字体	<br/>
+
+使用web字体  
+通过link方式引入或者通过import方式在mainjs中全局引入
 
 
 
