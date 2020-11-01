@@ -92,8 +92,22 @@ font-size:px2rem(20)
 ```
 
 ### 6 nginx搭建静态资源服务器
-1   brew install nginx
-2   sss
+1 brew install nginx  
+2 启动nginx--- sudo nginx；关闭nginx sudo nginx -s stop ；重启nginx sudo nginx -s reload；测试nginx nginx -t
+3 查看nginx配置文件 sudo vim /usr/local/etc/nginx/nginx.conf  
+4 创建自己的server
+```
+server {      
+        listen 8081;
+        server_name resouce;
+        root /Users/qiufeng/desktop/resource;
+        autoindex on;   
+        location / {
+            add_header Access-Control-Allow-Origin *;   //允许跨域
+        }
+        add_header Cache-Control "no-cache, must-revalidate";   //不做缓存
+    }
+```
 
 
 
