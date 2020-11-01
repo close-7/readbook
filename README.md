@@ -70,6 +70,29 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 ```
 
+### 5 初始化样式
+5.1 通过复制 https://meyerweb.com/eric/tools/css/reset 创建本地 reset.scss文件  
+并增加内容 `html,body{width:100%;height:100%;user-select:none(不许常按);overflow:hidden;font-family:'xxx'}`  
+5.2 创建global.scss文件
+```
+@import "./reset"
+
+$ratio: 375 / 10;
+@function px2rem($px){
+    @return $px / $ratio + rem;
+}
+```
+页面中使用
+```
+@import "./assets/global.scss"
+
+.text{
+font-size:px2rem(20)
+}
+```
+
+
+
 
 
 
