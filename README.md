@@ -38,6 +38,15 @@ vue全家桶+epub 阅读器
 
 
 ### 3 准备web字体
+(```)
+    @font-face {
+        font-family:'Cabin';       //字体名称
+        font-style:normal;          //字体样式：斜体/正常
+        font-weight:400;            //字体粗细
+        src: url('cabin.woff2') format('woffw');    //字体文件路径 字体文件格式
+        unicode-range:.....             //unicode范围
+    }
+(```)
 
 
 
