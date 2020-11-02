@@ -110,6 +110,63 @@ server {
 ```
 
 
+## 阅读器功能开发
+### 阅读器解析和渲染
+1 引入阅读器```import Epub from 'epubjs'
+global.ePub = Epub```  
+2 解析并渲染
+```
+initEpub(){
+    const url = 'http://localhost:8081/epub/'+this.fileName //获取路径
+    //渲染电子书
+    this.book = new Epub(url)    //创建电子书实例
+    this.rendition = this.book.renderTo('read',{  //配置宽高
+        width:innerWidth,
+        height:innerHeight,
+        method:'defult'
+    })
+    this.rendition.display()  //执行渲染
+    console.log(this.book)
+}
+```
+### 阅读器翻页功能
+1 绑定方法到rendition,获取x轴偏移量和滑动时间 
+```
+this.rendition.on('touchstart',event=>{   //通过on方法将事件绑定到渲染上
+    console.log(event)
+    this.touchStarX = event.changedTouches[0].clientX;
+    this.touchStartTime = event.timeStamp
+})
+this.rendition.on('touchend',event=>{
+    console.log(event)
+    const offsetX = event.changedTouches[0].clientX - this.touchStarX
+    const time = event.timeStamp - this.touchStartTime
+    if(time<500 && offsetX>40){
+        this.prevPage()
+    }else if(time<500 && offsetX <-40){
+        this.nextPage()
+    }else{
+        this.toggleTitleAndMenu()
+    }
+    // event.preventDefault();
+    event.stopPropagation();
+})
+```  
+2 调用rendition提供的prev()和next()
+```
+nextPage(){
+    if(this.rendition){
+        this.rendition.next()
+    }
+},
+prevPage(){
+    if(this.rendition){
+        this.rendition.prev()
+    }
+},
+```
+
+
 
 
 

@@ -13,6 +13,19 @@ export default {
         ...mapGetters(['fileName'])
     },
     methods:{
+        nextPage(){
+            if(this.rendition){
+                this.rendition.next()
+            }
+        },
+        prevPage(){
+            if(this.rendition){
+                this.rendition.prev()
+            }
+        },
+        toggleTitleAndMenu(){
+
+        },
         initEpub(){
             const url = 'http://localhost:8081/epub/'+this.fileName
             //渲染电子书
@@ -20,10 +33,29 @@ export default {
             this.rendition = this.book.renderTo('read',{
                 width:innerWidth,
                 height:innerHeight,
-                method:'defult'
+                // method:'defult'
             })
             this.rendition.display()
             console.log(this.book)
+            this.rendition.on('touchstart',event=>{   //通过on方法将事件绑定到渲染上
+                console.log(event)
+                this.touchStarX = event.changedTouches[0].clientX;
+                this.touchStartTime = event.timeStamp
+            })
+            this.rendition.on('touchend',event=>{
+                console.log(event)
+                const offsetX = event.changedTouches[0].clientX - this.touchStarX
+                const time = event.timeStamp - this.touchStartTime
+                if(time<500 && offsetX>40){
+                    this.prevPage()
+                }else if(time<500 && offsetX <-40){
+                    this.nextPage()
+                }else{
+                    this.toggleTitleAndMenu()
+                }
+                // event.preventDefault();
+                event.stopPropagation();
+            })
         }
     },
     mounted(){
