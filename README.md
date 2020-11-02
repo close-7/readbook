@@ -166,6 +166,42 @@ prevPage(){
 },
 ```
 
+### 通过vue mixin机制实现组建间解耦和复用
+1 大量重复代码影响开发效率不利于修改  
+```
+import { mapGetters } from 'vuex'
+export default {
+    computed:{
+        ...mapGetters(['menuVisible'])
+    },
+```
+2 创建/utils/mixin.js 将重复代码放入，并导出
+```
+import { mapGetters } from 'vuex'
+export const ebookMixin = {
+    computed: {
+        ...mapGetters([
+            'fileName',
+            'menuVisible'
+        ])
+    },
+}
+```
+3 通过vue mixin机制 引入代码
+```
+import { mapGetters, mapActions } from 'vuex'
+export const ebookMixin = {
+    computed: {
+        ...mapGetters([
+            'fileName',
+            'menuVisible'
+        ])
+    },
+    methods: {
+        ...mapActions(['setMenuVisible'])
+    },
+}
+```
 
 
 

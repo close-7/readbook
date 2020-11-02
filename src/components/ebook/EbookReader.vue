@@ -5,26 +5,35 @@
 </template>
 
 <script>
+// import { mapActions }  from 'vuex'
 import Epub from 'epubjs'
-import {mapGetters} from 'vuex'
 global.ePub = Epub
+import { ebookMixin } from '../../utils/mixin.js'
+
 export default {
-    computed:{
-        ...mapGetters(['fileName'])
-    },
+    mixins:[ebookMixin],
     methods:{
+        // ...mapActions(['setMenuVisible']),
         nextPage(){
             if(this.rendition){
                 this.rendition.next()
+                this.hideTitleAndMenu()
             }
         },
         prevPage(){
             if(this.rendition){
                 this.rendition.prev()
+                this.hideTitleAndMenu()
             }
         },
         toggleTitleAndMenu(){
-
+            // console.log('ok')
+            // this.$store.dispatch('setMenuVisible',!this.menuVisible)
+            this.setMenuVisible(!this.menuVisible)
+        },
+        hideTitleAndMenu(){
+            // this.$store.dispatch('setMenuVisible',false)
+            this.setMenuVisible(false)
         },
         initEpub(){
             const url = 'http://localhost:8081/epub/'+this.fileName
