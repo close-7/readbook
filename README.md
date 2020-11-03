@@ -272,6 +272,61 @@ export function getBookObject(fileName, key) {
 | :History/2013_Book_FungalDiseaseInBritainAndTheUn.epub-info: | :{"c":1604412057344,"e":253402300799000,"v":"{\"fontFamily\":\"Cabin\"}"}: |
 
 
+### 国际化
+1. 在src目录下创建leng文件夹，放入cn.js en.js
+```
+cn.js
+const messages = {
+  home: {
+    title: '书城',
+    hint: '计算机科学和软件工程',
+    guessYouLike: '猜你喜欢',
+    change: '换一批',
+  }
+}
+export default messages
+
+en.js
+const messages = {
+  home: {
+    title: 'Book Store',
+    hint: 'Computer Science And Software Engineering',
+    guessYouLike: 'Guess You Like',
+  }
+}
+export default messages
+```  
+2. npm i --save vue-i18n 安装vue-i18n lang文件夹下创建index.js---余下操作类似路由，在main.js中引入并挂载
+```
+import Vue from 'vue'
+import VueI18N from 'vue-i18n'
+import en from './en'
+import cn from './cn'
+import { getLocale, saveLocale } from '../utils/localStorage'
+
+Vue.use(VueI18N)  //运用插件，加载插件
+
+const messages = {
+  en,
+  cn
+}
+
+let locale = getLocale()
+if (!locale) {
+  locale = 'cn'
+  saveLocale(locale)
+}
+
+const i18n = new VueI18N({ //实例化i8n
+  locale,
+  messages
+})
+
+export default i18n
+```  
+3. 使用`<span class="icon-down2">{{$t('book.selectFont')}}</span>`
+
+
 
 
 

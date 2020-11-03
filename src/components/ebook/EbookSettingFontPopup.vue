@@ -3,7 +3,7 @@
     <div class="ebook-popup-list" v-show="fontFamilyVisible">
       <div class="ebook-popup-title">
         <div class="ebook-popup-title-icon" @click="hide">
-          <span class="icon-down2"></span>
+          <span class="icon-down2">{{$t('book.selectFont')}}</span>
         </div>
         <span class="ebook-popup-title-text">选择字体</span>
       </div>
