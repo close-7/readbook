@@ -268,8 +268,8 @@ export function getBookObject(fileName, key) {
     }
 }
 ```
-| :Key: | :Value: |
-| :History/2013_Book_FungalDiseaseInBritainAndTheUn.epub-info: | :{"c":1604412057344,"e":253402300799000,"v":"{\"fontFamily\":\"Cabin\"}"}: |
+| Key | Value |
+| History/2013_Book_FungalDiseaseInBritainAndTheUn.epub-info | {"c":1604412057344,"e":253402300799000,"v":"{\"fontFamily\":\"Cabin\"}"} |
 
 
 ### 国际化
