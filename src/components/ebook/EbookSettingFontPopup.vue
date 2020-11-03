@@ -23,7 +23,8 @@
 <script>
   import { FONT_FAMILY } from '../../utils/book'
   import { ebookMixin } from '../../utils/mixin'
-//   import { saveFontFamily } from '../../utils/localStorage'
+//   import { getLocalStorage, setLocalStorage } from '../../utils/localStorage'
+  import { saveFontFamily } from '../../utils/localStorage'
 
   export default {
     mixins: [ebookMixin],
@@ -32,10 +33,14 @@
         fontFamilyList: FONT_FAMILY
       }
     },
+    // mounted(){
+    //     setLocalStorage(this.fileName,this.defaultFontFamily)
+    //     console.log(getLocalStorage(this.fileName))
+    // },
     methods: {
       setFontFamily(font) {
         this.setDefaultFontFamily(font)
-        // saveFontFamily(this.fileName, font)
+        saveFontFamily(this.fileName, font)
         if (font === 'Default') {
           this.currentBook.rendition.themes.font('Times New Roman')
         } else {

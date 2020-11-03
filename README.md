@@ -218,6 +218,61 @@ this.rendition.hooks.content.register(contents=>{
 })
 ```
 
+### 通过localstorage实现离线存储
+1. 安装`npm i --save web-storage-cache`---将传入的字符串变成json存储  
+2. 在utils文件夹中创建localStorage.js 引入 web-storage-cache 封装对localstorage的操作  
+3. 
+```
+import Storage from 'web-storage-cache'
+
+const localStorage = new Storage()
+
+export function setLocalStorage(key, value) {
+    return localStorage.set(key, value)
+}
+
+export function getLocalStorage(key) {
+    return localStorage.get(key)
+}
+
+export function removeLocalStorage(key) {
+    return localStorage.delete(key)
+}
+```  
+4. 使用
+```
+import { getLocalStorage, setLocalStorage } from '../../utils/localStorage'
+
+mounted(){
+    setLocalStorage(this.fileName,this.defaultFontFamily)
+    console.log(getLocalStorage(this.fileName))
+},
+```  
+5. 优化localstorage存储,将书籍对应的字体字号等属性存到一个key下
+```
+export function setBookObject(fileName, key, value) {
+    let book = getLocalStorage(`${fileName}-info`)
+    if (!book) {
+        book = {}
+    }
+    book[key] = value
+    setLocalStorage(`${fileName}-info`, book)
+}
+
+export function getBookObject(fileName, key) {
+    let book = getLocalStorage(`${fileName}-info`)
+    if (book) {
+        return book[key]
+    } else {
+        return null
+    }
+}
+```
+| :Key: | :Value: |
+| :History/2013_Book_FungalDiseaseInBritainAndTheUn.epub-info: | :{"c":1604412057344,"e":253402300799000,"v":"{\"fontFamily\":\"Cabin\"}"}: |
+
+
+
 
 
 

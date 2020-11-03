@@ -9,6 +9,7 @@
 import Epub from 'epubjs'
 global.ePub = Epub
 import { ebookMixin } from '../../utils/mixin.js'
+import { getFontFamily,saveFontFamily,getFontSize,saveFontSize } from '../../utils/localStorage.js'
 
 export default {
     mixins:[ebookMixin],
@@ -43,6 +44,26 @@ export default {
             this.setSettingVisible(-1)
             this.setFontFamilyVisible(false)
         },
+        //第一次进入设置默认字号
+        initFontSize() {
+            let fontSize = getFontSize(this.fileName)
+            if (!fontSize) {
+                saveFontSize(this.fileName, this.defaultFontSize)
+            } else {
+                this.rendition.themes.fontSize(fontSize)
+                this.setDefaultFontSize(fontSize)
+            }
+        },
+        //第一次进入设置默认字体
+        initFontFamily() {
+            let font = getFontFamily(this.fileName)
+            if (!font) {
+                saveFontFamily(this.fileName, this.defaultFontFamily)
+            } else {
+                this.rendition.themes.font(font)
+                this.setDefaultFontFamily(font)
+            }
+        },
         initEpub(){
             const url = 'http://localhost:8081/epub/'+this.fileName
             //渲染电子书
@@ -53,7 +74,10 @@ export default {
                 height:innerHeight,
                 // method:'continuous',
             })
-            this.rendition.display()
+            this.rendition.display().then(()=>{
+                this.initFontSize()
+                this.initFontFamily()
+            })
             console.log(this.book)
             this.rendition.on('touchstart',event=>{   //通过on方法将事件绑定到渲染上
                 console.log(event)
