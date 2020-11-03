@@ -203,6 +203,21 @@ export const ebookMixin = {
 }
 ```
 
+### vue cli 中在客户端代码中使用环境变量
+1. 创建文件 .env.development
+`VUE_APP_RES_URL = http://localhost:8081`  
+2. 在组件中引入
+```
+this.rendition.hooks.content.register(contents=>{
+    Promise.all([
+        contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/daysOne.css`),
+        contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/cabin.css`),
+        contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/montserrat.css`),
+        contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`)
+    ]).then(()=>{})  
+})
+```
+
 
 
 

@@ -5,10 +5,47 @@ export const ebookMixin = {
     computed: {
         ...mapGetters([
             'fileName',
-            'menuVisible'
-        ])
+            'menuVisible',
+            'settingVisible',
+            'defaultFontSize',
+            'defaultFontFamily',
+            'fontFamilyVisible',
+            'defaultTheme',
+            'bookAvailable',
+            'progress',
+            'section',
+            'isPaginating',
+            'currentBook',
+            'navigation',
+            'cover',
+            'metadata',
+            'paginate',
+            'pagelist',
+            'offsetY',
+            'isBookmark'
+        ]),
     },
     methods: {
-        ...mapActions(['setMenuVisible'])
-    },
+        ...mapActions([
+            'setFileName',
+            'setMenuVisible',
+            'setSettingVisible',
+            'setDefaultFontSize',
+            'setDefaultFontFamily',
+            'setFontFamilyVisible',
+            'setDefaultTheme',
+            'setBookAvailable',
+            'setProgress',
+            'setSection',
+            'setIsPaginating',
+            'setCurrentBook',
+            'setNavigation',
+            'setCover',
+            'setMetadata',
+            'setPaginate',
+            'setPagelist',
+            'setOffsetY',
+            'setIsBookmark'
+        ]),
+    }
 }
