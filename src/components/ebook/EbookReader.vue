@@ -9,7 +9,8 @@
 import Epub from 'epubjs'
 global.ePub = Epub
 import { ebookMixin } from '../../utils/mixin.js'
-import { getFontFamily,saveFontFamily,getFontSize,saveFontSize } from '../../utils/localStorage.js'
+import { getFontFamily,saveFontFamily,getFontSize,saveFontSize,getTheme,
+    saveTheme, } from '../../utils/localStorage.js'
 
 export default {
     mixins:[ebookMixin],
@@ -44,6 +45,18 @@ export default {
             this.setSettingVisible(-1)
             this.setFontFamilyVisible(false)
         },
+        initTheme() {
+            let defaultTheme = getTheme(this.fileName)
+            if (!defaultTheme) {
+                defaultTheme = this.themeList[0].name
+                saveTheme(this.fileName, defaultTheme)
+            }
+            this.setDefaultTheme(defaultTheme)
+            this.themeList.forEach(theme => {
+                this.rendition.themes.register(theme.name, theme.style)
+            })
+            this.rendition.themes.select(defaultTheme)
+        },
         //第一次进入设置默认字号
         initFontSize() {
             let fontSize = getFontSize(this.fileName)
@@ -75,8 +88,10 @@ export default {
                 // method:'continuous',
             })
             this.rendition.display().then(()=>{
+                this.initTheme()
                 this.initFontSize()
                 this.initFontFamily()
+                this.initGlobalStyle()
             })
             console.log(this.book)
             this.rendition.on('touchstart',event=>{   //通过on方法将事件绑定到渲染上
