@@ -34,8 +34,7 @@ const store = {
     SET_CURRENT_TYPE(state, type) {
       state.currentType = type
     }
-  },
-  
+  }
 }
 
 export default store
