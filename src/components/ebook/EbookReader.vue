@@ -24,7 +24,7 @@
     getLocation
   } from '../../utils/localStorage'
   import { flatten } from '../../utils/book'
-  import { getLocalForage } from '../../utils/localForage'
+  // import { getLocalForage } from '../../utils/localForage'
 
   global.ePub = Epub
   export default {
@@ -156,7 +156,7 @@
         this.rendition = this.book.renderTo('read', {
           width: innerWidth,
           height: innerHeight,
-          // method: 'default'
+          method: 'default'
         })
         const location = getLocation(this.fileName)
         this.display(location, () => {
@@ -218,6 +218,7 @@
       },
       initEpub(url) {
         this.book = new Epub(url)
+        debugger
         this.setCurrentBook(this.book)
         this.initRendition()
         // this.initGesture()
@@ -225,32 +226,32 @@
         this.book.ready.then(() => {
           return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName) / 16))
         }).then(locations => {
-          this.navigation.forEach(nav => {
-            nav.pagelist = []
-          })
-          locations.forEach(item => {
-            const loc = item.match(/\[(.*)\]!/)[1]
-            this.navigation.forEach(nav => {
-              if (nav.href) {
-                const href = nav.href.match(/^(.*)\.html$/)
-                if (href) {
-                  if (href[1] === loc) {
-                    nav.pagelist.push(item)
-                  }
-                }
-              }
-            })
-            let currentPage = 1
-            this.navigation.forEach((nav, index) => {
-              if (index === 0) {
-                nav.page = 1
-              } else {
-                nav.page = currentPage
-              }
-              currentPage += nav.pagelist.length + 1
-            })
-          })
-          this.setPagelist(locations)
+          // this.navigation.forEach(nav => {
+          //   nav.pagelist = []
+          // })
+          // locations.forEach(item => {
+          //   const loc = item.match(/\[(.*)\]!/)[1]
+          //   this.navigation.forEach(nav => {
+          //     if (nav.href) {
+          //       const href = nav.href.match(/^(.*)\.html$/)
+          //       if (href) {
+          //         if (href[1] === loc) {
+          //           nav.pagelist.push(item)
+          //         }
+          //       }
+          //     }
+          //   })
+          //   let currentPage = 1
+          //   this.navigation.forEach((nav, index) => {
+          //     if (index === 0) {
+          //       nav.page = 1
+          //     } else {
+          //       nav.page = currentPage
+          //     }
+          //     currentPage += nav.pagelist.length + 1
+          //   })
+          // })
+          // this.setPagelist(locations)
           this.setBookAvailable(true)
           this.refreshLocation()
         })
@@ -259,19 +260,22 @@
     mounted() {
       const books = this.$route.params.fileName.split('|')
       const fileName = books[1]
-      getLocalForage(fileName, (err, blob) => {
-        if (!err && blob) {
-          this.setFileName(books.join('/')).then(() => {
-            this.initEpub(blob)
-          })
-        } else {
-          this.setFileName(books.join('/')).then(() => {
-            
-            const url = process.env.VUE_APP_RES_URL + '/epub/' + this.fileName + '.epub'
+      this.setFileName(books.join('/')).then(() => {
+            const url = 'http://192.168.1.100:8081/epub/' + this.fileName + '.epub'
             this.initEpub(url)
           })
-        }
-      })
+      // getLocalForage(fileName, (err, blob) => {
+      //   if (!err && blob) {
+      //     this.setFileName(books.join('/')).then(() => {
+      //       this.initEpub(blob)
+      //     })
+      //   } else {
+      //     this.setFileName(books.join('/')).then(() => {
+      //       const url = process.env.VUE_APP_EPUB_URL + '/' + this.fileName + '.epub'
+      //       this.initEpub(url)
+      //     })
+      //   }
+      // })
     }
   }
 </script>

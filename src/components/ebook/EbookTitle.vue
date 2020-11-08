@@ -1,35 +1,35 @@
 <template>
   <transition name="slide-down">
-      <div class="title-wrapper" v-show="menuVisible" >
-        <div class="left">
-          <span class="icon-back "></span>
+    <div class="title-wrapper" v-show="menuVisible">
+      <div class="left">
+        <span class="icon-back" @click="back"></span>
+      </div>
+      <div class="right">
+        <div class="icon-wrapper">
+          <span class="icon-shelf"></span>
         </div>
-        <div class="right">
-          <div class="icon-wrapper">
-            <span class="icon-shelf "></span>
-          </div>
-          <div class="icon-wrapper">
-            <span class="icon-cart "></span>
-          </div>
-          <div class="icon-wrapper">
-            <span class="icon-more "></span>
-          </div>
+        <div class="icon-wrapper">
+          <span class="icon-cart"></span>
+        </div>
+        <div class="icon-wrapper">
+          <span class="icon-more"></span>
         </div>
       </div>
-    </transition>
+    </div>
+  </transition>
 </template>
 
 <script>
-import { ebookMixin } from '../../utils/mixin.js'
+  import { ebookMixin } from '../../utils/mixin'
 
-export default {
-    mixins:[ebookMixin],
-    methods:{
-        back() {
-            console.log('back')
-        }
+  export default {
+    mixins: [ebookMixin],
+    methods: {
+      back() {
+        this.$router.go(-1)
+      }
     }
-}
+  }
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
@@ -68,5 +68,3 @@ export default {
     }
   }
 </style>
-
-

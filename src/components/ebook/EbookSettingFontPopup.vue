@@ -3,9 +3,9 @@
     <div class="ebook-popup-list" v-show="fontFamilyVisible">
       <div class="ebook-popup-title">
         <div class="ebook-popup-title-icon" @click="hide">
-          <span class="icon-down2">{{$t('book.selectFont')}}</span>
+          <span class="icon-down2"></span>
         </div>
-        <span class="ebook-popup-title-text">选择字体</span>
+        <span class="ebook-popup-title-text">{{$t('book.selectFont')}}</span>
       </div>
       <div class="ebook-popup-list-wrapper">
         <div class="ebook-popup-item" v-for="(item, index) in fontFamilyList" :key="index"
@@ -23,7 +23,6 @@
 <script>
   import { FONT_FAMILY } from '../../utils/book'
   import { ebookMixin } from '../../utils/mixin'
-//   import { getLocalStorage, setLocalStorage } from '../../utils/localStorage'
   import { saveFontFamily } from '../../utils/localStorage'
 
   export default {
@@ -33,10 +32,6 @@
         fontFamilyList: FONT_FAMILY
       }
     },
-    // mounted(){
-    //     setLocalStorage(this.fileName,this.defaultFontFamily)
-    //     console.log(getLocalStorage(this.fileName))
-    // },
     methods: {
       setFontFamily(font) {
         this.setDefaultFontFamily(font)
